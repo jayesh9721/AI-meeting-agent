@@ -1,16 +1,40 @@
-# React + Vite
+# AI Meeting Agent
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dashboard for meetings processed by an AI pipeline. Recorded meetings (via Fathom) run through an n8n workflow that writes summaries, participants and action items to Supabase. This app shows them to the team: what was discussed, who owns which task, and what's coming up.
 
-Currently, two official plugins are available:
+## Features
+- **Dashboard:** today's overview with key stats and upcoming meetings
+- **Meetings:** every processed meeting with title, date, participants, AI summary and recording link
+- **Tasks:** action items extracted from meetings and assigned to team members
+- **Team & Activity:** team directory and an activity log of what changed
+- **Auth:** email sign-in with Supabase Auth
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech stack
+React 19 · Vite · Supabase (Postgres + Auth) · n8n · Lucide icons
 
-## React Compiler
+## Data model
+| Table | Holds |
+|---|---|
+| `fathom_meetings` | Processed meetings, summaries and recording links |
+| `fathom_meeting_tasks` | Action items extracted from each meeting |
+| `team_members` | People that tasks are assigned to |
+| `upcoming_meetings` | Scheduled meetings |
+| `activity_logs` | Audit trail of changes |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Run locally
+```bash
+npm install
+```
+Create a `.env` file:
+```bash
+VITE_SUPABASE_URL=your-project-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+Then:
+```bash
+npm run dev      # http://localhost:5173
+npm run build    # production build
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## License
+MIT, see [LICENSE](LICENSE).
